@@ -5,10 +5,11 @@ model1 = collections.defaultdict(lambda: 0)
 for line in file:
     line = line.replace('\n', '')
     lis = line.split(': ')
-    correct_word = lis[0]
-    wrong_words = lis[1].split(', ')
-    for wrong_word in wrong_words:
-        model1[wrong_word] = correct_word
+    if len(lis) > 1:
+        correct_word = lis[0]
+        wrong_words = lis[1].split(', ')
+        for wrong_word in wrong_words:
+            model1[wrong_word] = correct_word
 file.close()
 
 tokens = re.findall('[a-z]+', open('big.txt').read().lower())
@@ -31,7 +32,6 @@ def edits1(word):
 def known(words):
     return set(w for w in words if w in nwords)
 
-file = open('spell-errors.txt', 'w')
 while(1):
     w = raw_input()
     if w=='': break
@@ -42,8 +42,17 @@ while(1):
         options = known([w]) or known(edits1(w)) or [w]
         correct_word = max(options, key=nwords.get)
         print correct_word,
-    print "Do you want to use our corrected word? (y/n): ",
-    response = raw_input()
-    if response == 'y':
-        file.write(correct_word + ': ' + w)
-file.close()
+    if correct_word != w:
+        print "\nDo you want to use our corrected word? (y/n): ",
+        response = raw_input()
+        if response == 'y':
+            with open("spell-errors.txt", "a") as myfile:
+                myfile.write('\n' + correct_word + ': ' + w)
+        elif response == 'n':
+            print "\nPropose your word for future reference: ",
+            r = raw_input()
+            if len(r)>1:
+                with open("spell-errors.txt", "a") as myfile:
+                    myfile.write('\n' + r + ': ' + w)
+    else:
+        print
