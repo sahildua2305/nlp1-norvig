@@ -31,10 +31,11 @@ def edits1(word):
 def known(words):
     return set(w for w in words if w in nwords)
 
-
 while(1):
     w = raw_input()
     if w=='': break
-    options = known([w]) or known(edits1(w)) or [w]
-    print max(options, key=nwords.get)
-    
+    if model1[w] != 0:
+        print model1[w]
+    else:
+        options = known([w]) or known(edits1(w)) or [w]
+        print max(options, key=nwords.get)
