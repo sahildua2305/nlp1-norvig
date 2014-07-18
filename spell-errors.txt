@@ -6557,7 +6557,7 @@ modelled: malod
 accused: accussed
 cards: cars
 most_likely: mostlikely
-and: a*5, ane, anf, aud, I, hand, so, are, anbd, aand, an*4, than
+and: a*5, ane, anf, aud, I, hand, are, anbd, aand, an*4, than
 overfill: overfil
 mates: mattes
 pastime: pass_time, passtime, pasttime*2
